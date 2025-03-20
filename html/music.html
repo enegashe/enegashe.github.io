@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music I Like | Emmanuel Negash</title>
+    <meta name="description" content="Emmanuel Negash's music recommendations and thoughts.">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Music I Like | Emmanuel Negash">
+    <meta property="og:description" content="Emmanuel Negash's music recommendations and thoughts.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://enegashe.github.io/music.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase Configuration - Load this before Firebase SDK -->
+    <script src="../src/firebaseConfig.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+    <link rel="stylesheet" href="../css/music.css">
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <a href="index.html" class="logo">emmanuel<span style="color: #6d97d8;">Negash</span></a>
+            </div>
+            
+            <div class="marquee">
+                <div class="marquee-content">
+                    WELCOME TO MY MUSIC PAGE • DISCOVER SONGS I LIKE • SHARE YOUR THOUGHTS 
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1 class="page-title"><span class="blink">[</span> Music I Like <span class="blink">]</span></h1>
+        
+        <div class="login-status">
+            <span id="user-status">Not logged in</span>
+            <button id="login-btn" class="btn">Admin Login</button>
+            <button id="logout-btn" class="btn" style="display: none;">Logout</button>
+        </div>
+
+        <div class="accessibility-options">
+            <button id="toggle-animations-btn" class="btn" title="Toggle animations on/off">Disable Animations</button>
+        </div>
+        
+        <div id="admin-panel" class="admin-panel">
+            <h2 class="admin-title">Create New Music Post</h2>
+            <form id="post-form" class="post-form">
+                <label for="post-title">Title:</label>
+                <input type="text" id="post-title" required>
+                
+                <label for="post-subtitle">Subtitle:</label>
+                <input type="text" id="post-subtitle" required>
+                
+                <label for="post-thumbnail">Thumbnail URL (optional):</label>
+                <input type="text" id="post-thumbnail" placeholder="https://example.com/image.jpg">
+                
+                <label for="post-content">Content (Markdown supported):</label>
+                <textarea id="post-content" placeholder="Write your post here. Markdown supported. The first image will be used as thumbnail if no URL is provided. For YouTube videos, use: ![video](youtube-url)" required></textarea>
+                
+                <label for="post-pinned" class="checkbox-label">
+                    <input type="checkbox" id="post-pinned"> Pin this post to the top
+                </label>
+                
+                <button type="submit" class="btn">Publish Post</button>
+            </form>
+        </div>
+        <div id="music-posts" class="music-posts">
+            <!-- Empty div - posts will be loaded here from Firebase -->
+            <div id="loading-indicator" style="text-align: center; margin: 40px 0;">
+                <p>Loading posts... <span class="blink">|</span></p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://github.com/enegashe" class="social-link" target="_blank">
+                    <div class="ascii-icon">GH</div>
+                </a>
+                <a href="https://www.linkedin.com/in/emmanuel-negash-72176420b/" class="social-link" target="_blank">
+                    <div class="ascii-icon">IN</div>
+                </a>
+            </div>
+            
+            <div class="hit-counter">
+                VISITORS: <span class="counter-digits">0</span><span class="counter-digits">0</span><span class="counter-digits">0</span><span class="counter-digits">0</span><span class="counter-digits">7</span>
+            </div>
+            
+            <p class="footer-text">© 2025 Emmanuel Negash. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <div id="login-modal" class="login-modal">
+        <div class="login-form">
+            <div class="close-btn" id="close-login">X</div>
+            <h2>Admin Login</h2>
+            <form id="admin-login-form">
+                <input type="email" id="admin-email" placeholder="Email" required>
+                <input type="password" id="admin-password" placeholder="Password" required>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+    <script src="../bundle.js"></script>
+</body>
+</html>
