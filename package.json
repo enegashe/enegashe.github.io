@@ -1,0 +1,32 @@
+{
+    "name": "enegashe.github.io",
+    "version": "1.0.0",
+    "description": "Personal GitHub Pages site for Emmanuel Negash",
+    "main": "index.js",
+    "scripts": {
+      "build": "webpack --mode production",
+      "start": "serve dist",
+      "deploy": "gh-pages -d dist"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/enegashe/enegashe.github.io.git"
+    },
+    "keywords": [],
+    "author": "Emmanuel Negash",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/enegashe/enegashe.github.io/issues"
+    },
+    "homepage": "https://enegashe.github.io",
+    "dependencies": {
+      "copy-webpack-plugin": "^11.0.0",
+      "dotenv-webpack": "^8.0.1",
+      "gh-pages": "^5.0.0",
+      "html-webpack-plugin": "^5.5.0",
+      "serve": "^14.2.0",
+      "webpack": "^5.88.2",
+      "webpack-cli": "^5.1.4"
+    }
+  }
+  

@@ -1,0 +1,1365 @@
+/* ===============================
+   VARIABLES
+   =============================== */
+   :root {
+    --text-color: #33ff00;
+    --link-color: #00ccff;
+    --link-hover: #ff00ff;
+    --border-color: #33ff00;
+    --primary-dark: #334d6e;
+    --error-color: #ff6b6b;
+    --bg-color-1: rgba(0, 0, 0, 0.6);
+    --bg-color-2: rgba(0, 20, 0, 0.3);
+    --bg-color-3: rgba(0, 40, 0, 0.3);
+}
+
+/* ===============================
+   BASE STYLES
+   =============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier Prime', monospace;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: black;
+    overflow-x: hidden;
+    text-shadow: 0 0 2px var(--text-color);
+    padding-bottom: 50px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+code, pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Blinking text effect */
+.blink {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInComment {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===============================
+   BACKGROUND ELEMENTS
+   =============================== */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ===============================
+   HEADER & NAVIGATION
+   =============================== */
+header {
+    background-color: black;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 30px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.logo-container {
+    display: inline-block;
+    border: 2px solid var(--border-color);
+    padding: 10px 20px;
+    margin-bottom: 15px;
+}
+
+.logo {
+    font-family: 'VT323', monospace;
+    font-size: 2.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.marquee {
+    background-color: #000055;
+    border: 2px solid var(--border-color);
+    padding: 5px 10px;
+    font-family: 'VT323', monospace;
+    margin: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 30s linear infinite;
+    /* Start with text already visible */
+    transform: translateX(0%);
+}
+
+@keyframes marquee {
+    0% { transform: translateX(20%); }  /* Start with text already visible */
+    100% { transform: translateX(-120%); } /* Ensure complete loop before resetting */
+}
+
+.marquee {
+    position: relative;
+}
+
+.marquee:before,
+.marquee:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 100%;
+    z-index: 2;
+}
+
+.marquee:before {
+    left: 0;
+    background: linear-gradient(to right, #000055, transparent);
+}
+
+.marquee:after {
+    right: 0;
+    background: linear-gradient(to left, #000055, transparent);
+}
+
+.marquee {
+    overflow: hidden;
+}
+
+/* Ensure better handling of animated content */
+body:not(.animations-disabled) .marquee-content {
+    min-width: 200%; /* Ensure content is wider than container */
+    white-space: nowrap;
+    animation-delay: 0s;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    display: inline-block;
+    color: var(--link-color);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    border: 1px solid var(--link-color);
+    padding: 5px 10px;
+    background-color: #000033;
+    transition: all 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--link-hover);
+    border-color: var(--link-hover);
+    background-color: #330033;
+    transform: translateY(-2px);
+}
+
+/* ===============================
+   MAIN CONTENT
+   =============================== */
+main {
+    padding: 20px 0;
+}
+
+.page-title {
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 3rem;
+    margin-bottom: 30px;
+    border: 2px dashed var(--border-color);
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.login-status {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.music-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+    min-height: 200px;
+}
+
+/* ===============================
+   BUTTONS
+   =============================== */
+.btn {
+    display: inline-block;
+    background-color: #000033;
+    color: var(--link-color);
+    border: 1px solid var(--link-color);
+    padding: 5px 10px;
+    text-decoration: none;
+    font-family: 'Courier Prime', monospace;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    color: var(--link-hover);
+    border-color: var(--link-hover);
+    background-color: #330033;
+    transform: translateY(-2px);
+}
+
+.back-btn {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 20px;
+    display: inline-block;
+    opacity: 0.8;
+    transition: opacity 0.3s, transform 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.back-btn:before {
+    content: "←";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s;
+}
+
+.back-btn:hover, .music-posts.history-back .back-btn {
+    opacity: 1;
+    transform: translateX(-5px);
+}
+
+.back-btn:hover {
+    opacity: 1;
+    transform: translateX(-5px);
+    color: var(--link-hover);
+    border-color: var(--link-hover);
+}
+
+.back-btn:hover:before {
+    transform: translate(-3px, -50%);
+}
+
+/* ===============================
+   POST STYLES
+   =============================== */
+   .post {
+    border: 2px solid var(--border-color);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.post:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.1);
+}
+
+.post-full {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    margin-bottom: 40px;
+}
+
+.post-header {
+    margin-bottom: 15px;
+}
+
+.post-title {
+    font-size: 1.8rem;
+    font-family: 'VT323', monospace;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.post-title:hover {
+    color: var(--link-hover);
+}
+
+.post-subtitle {
+    font-size: 1.2rem;
+    color: var(--link-color);
+    margin-bottom: 10px;
+}
+
+.post-date {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.post-content {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    margin: 10px 0;
+}
+
+.post-content a {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+
+.post-content a:hover {
+    color: var(--link-hover);
+}
+
+.post-content pre {
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+.post-content iframe {
+    max-width: 100%;
+}
+
+.post-actions {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.preview-comment-link {
+    margin-top: 0;
+    display: inline-block;
+}
+.action-buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+
+/* ===============================
+   POST PREVIEW STYLES
+   =============================== */
+.post-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+}
+
+.post-thumbnail {
+    flex: 0 0 150px;
+    max-width: 150px;
+    margin-right: 20px;
+}
+
+.post-thumbnail img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease;
+}
+
+.post-thumbnail img:hover {
+    transform: scale(1.05);
+    border-color: var(--link-hover);
+}
+
+.post-preview-text {
+    flex: 1;
+    min-width: 0; /* Important for preventing overflow */
+}
+
+/* ===============================
+   COMMENT SYSTEM - UPDATED
+   =============================== */
+.comments-section {
+    margin-top: 20px;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 20px;
+}
+
+.comments-title {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-family: 'VT323', monospace;
+}
+
+.comment {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(0, 20, 0, 0.3);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.comment:hover {
+    background-color: rgba(0, 30, 0, 0.4);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: var(--link-color);
+}
+
+.comment-date {
+    color: #999;
+}
+
+.comment-content {
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.comment-content.preview {
+    max-height: 80px;
+    overflow: hidden;
+    position: relative;
+}
+
+.comment-content.preview::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(0, 15, 0, 0), rgba(0, 15, 0, 0.8));
+    pointer-events: none;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-actions .btn {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    min-width: 60px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.likes-count {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+/* Comment Form */
+.comment-form {
+    margin-top: 20px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.comment-form.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+.comment-form textarea,
+.reply-form textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #001100;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-family: 'Courier Prime', monospace;
+    margin-bottom: 10px;
+    resize: vertical;
+    min-height: 80px;
+    transition: height 0.3s ease, border-color 0.3s ease;
+}
+
+.comment-form textarea:focus,
+.reply-form textarea:focus {
+    height: 120px;
+    border-color: var(--link-hover);
+    outline: none;
+}
+
+.comment-form input[type="text"],
+.reply-form input[type="text"] {
+    padding: 5px 10px;
+    background-color: #001100;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-family: 'Courier Prime', monospace;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 300px;
+    transition: border-color 0.3s ease;
+}
+
+.comment-form input[type="text"]:focus,
+.reply-form input[type="text"]:focus {
+    border-color: var(--link-hover);
+    outline: none;
+}
+
+/* Like Button */
+.like-btn {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    transition: all 0.3s ease;
+}
+
+.like-btn {
+    font-size: 0.8rem !important;
+    padding: 3px 8px !important;
+}
+
+.like-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.like-btn.already-liked {
+    background-color: #660066;
+    color: white;
+    border-color: #990099;
+}
+
+.like-btn.author-comment {
+    background-color: #333333;
+    color: #999999;
+    border-color: #666666;
+}
+
+.like-btn:not(:disabled):hover {
+    transform: scale(1.05);
+}
+
+.like-btn:not(:disabled):active {
+    transform: scale(0.95);
+}
+
+/* Reply System - UPDATED */
+.reply-button {
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.reply-button.active-reply {
+    background-color: #660066;
+    color: white;
+    border-color: #990099;
+}
+
+.reply-form {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: none;
+    padding: 10px;
+    border-left: 2px solid var(--link-color);
+    background-color: rgba(0, 15, 0, 0.4);
+    transition: all 0.3s ease;
+    width: calc(100% - 10px);
+    box-sizing: border-box;
+}
+
+.reply-form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.cancel-reply-btn {
+    background-color: #330000;
+    border-color: #660000;
+}
+
+.cancel-reply-btn:hover {
+    background-color: #660000;
+    border-color: #990000;
+}
+
+/* Improved Nested Replies */
+.replies {
+    margin-top: 10px;
+    padding-left: 15px;
+    border-left: 2px solid rgba(0, 204, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.nested-reply {
+    position: relative;
+}
+
+.nested-reply::before {
+    content: "↪";
+    position: absolute;
+    left: -15px;
+    color: var(--link-color);
+    opacity: 0.7;
+}
+
+/* Depth-based styling */
+.depth-1 {
+    border-left-color: rgba(0, 204, 255, 0.5);
+}
+
+.depth-2 {
+    border-left-color: rgba(255, 0, 255, 0.3);
+}
+
+.depth-3 {
+    border-left-color: rgba(51, 255, 0, 0.3);
+}
+
+.depth-4 {
+    border-left-color: rgba(255, 255, 0, 0.3);
+}
+
+.depth-5 {
+    border-left-color: rgba(255, 128, 0, 0.3);
+}
+
+/* Continue Thread Button */
+.continue-thread-btn {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    background-color: rgba(0, 30, 0, 0.6);
+    border-color: rgba(0, 204, 255, 0.5);
+    text-align: center;
+    padding: 8px;
+}
+
+.continue-thread-btn:hover {
+    background-color: rgba(0, 40, 0, 0.7);
+    border-color: var(--link-hover);
+}
+
+/* Thread Back Button */
+.thread-back-btn {
+    margin-bottom: 20px;
+    display: block;
+    width: auto;
+    background-color: rgba(0, 20, 0, 0.5);
+    border-color: var(--border-color);
+    position: relative;
+}
+
+.thread-back-btn:before {
+    content: "↩";
+    margin-right: 5px;
+}
+
+.thread-back-btn:hover {
+    background-color: rgba(0, 40, 0, 0.7);
+}
+
+/* Loading Indicator for Comments */
+.comment-loading {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(0, 20, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+/* Preview Comments */
+.top-comments-section {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-top: 1px dashed var(--border-color);
+    background-color: rgba(0, 10, 0, 0.2);
+    border-radius: 5px;
+}
+
+.top-comments-title {
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--link-color);
+}
+
+.top-comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.top-comment, .preview-comment {
+    background-color: rgba(0, 10, 0, 0.4);
+    border: 1px solid var(--border-color);
+}
+
+.preview-comment {
+    animation: fadeInUp 0.4s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.preview-comment:hover {
+    background-color: rgba(0, 20, 0, 0.5);
+}
+
+.preview-comment:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.preview-comment:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.view-all-comments {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.view-all-comments .btn {
+    font-size: 0.85rem;
+    padding: 5px 15px;
+}
+
+/* ===============================
+   ADMIN PANEL
+   =============================== */
+.admin-panel {
+    margin-top: 40px;
+    border: 2px solid var(--border-color);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+}
+
+.admin-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-family: 'VT323', monospace;
+    text-align: center;
+}
+
+.post-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.post-form input[type="text"],
+.post-form textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: #001100;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-family: 'Courier Prime', monospace;
+    margin-bottom: 15px;
+    resize: vertical;
+}
+
+.post-form textarea {
+    min-height: 200px;
+}
+
+.post-form input[type="text"]:focus,
+.post-form textarea:focus {
+    border-color: var(--link-hover);
+    outline: none;
+}
+
+/* ===============================
+   LOGIN MODAL
+   =============================== */
+.login-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    background-color: black;
+    border: 2px solid var(--border-color);
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'VT323', monospace;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    background-color: #001100;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    font-family: 'Courier Prime', monospace;
+    margin-bottom: 15px;
+}
+
+.login-form input:focus {
+    border-color: var(--link-hover);
+    outline: none;
+}
+
+.login-form .btn {
+    width: 100%;
+}
+
+.close-btn {
+    text-align: right;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--link-hover);
+}
+
+/* ===============================
+   FOOTER
+   =============================== */
+footer {
+    margin-top: 50px;
+    border-top: 2px solid var(--border-color);
+    padding-top: 30px;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--link-color);
+    text-decoration: none;
+    border: 1px solid var(--link-color);
+    padding: 5px 10px;
+    background-color: #000033;
+    transition: all 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--link-hover);
+    border-color: var(--link-hover);
+    background-color: #330033;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    background-color: #000000;
+    border: 2px solid var(--text-color);
+    border-radius: 0; /* Square shape for pixelated look */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    text-shadow: 0 0 2px var(--text-color); /* Add glow effect */
+}
+
+.social-link:hover {
+    background-color: #001100;
+    border-color: var(--link-hover);
+    color: var(--link-hover);
+    transform: translateY(-3px);
+    text-shadow: 0 0 3px var(--link-hover);
+}
+
+.pixelated-icon {
+    image-rendering: pixelated; /* Modern browsers */
+    image-rendering: crisp-edges; /* Firefox */
+    -ms-interpolation-mode: nearest-neighbor; /* IE */
+    shape-rendering: crispEdges; /* SVG specific */
+}
+
+.footer-text {
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+.hit-counter {
+    margin-top: 20px;
+    font-family: 'VT323', monospace;
+    letter-spacing: 2px;
+}
+
+.counter-digits {
+    background-color: #000033;
+    border: 1px solid var(--border-color);
+    padding: 2px 5px;
+    margin: 0 2px;
+}
+
+.ascii-icon {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+/* ===============================
+   LOADING INDICATORS
+   =============================== */
+.loading-indicator {
+    text-align: center;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#post-loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    z-index: 10;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 5px rgba(51, 255, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(51, 255, 0, 0.7);
+    }
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+   =============================== */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .nav-links a {
+        width: 80%;
+        text-align: center;
+    }
+    
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    .page-title {
+        cursor: pointer;
+        transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
+    }
+
+    .page-title:hover {
+        color: var(--link-hover);
+        transform: translateY(-2px);
+        text-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
+    }
+    
+    .replies {
+        padding-left: 10px;
+        margin-left: 5px;
+    }
+    
+    .nested-reply::before {
+        left: -10px;
+    }
+    
+    .reply-form {
+        margin-left: 0;
+        width: 100%;
+        border-left: none;
+        border-top: 2px solid var(--link-color);
+    }
+    
+    .comment-actions {
+        flex-wrap: wrap;
+    }
+    
+    .thread-back-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .post-thumbnail {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .post-preview {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .replies {
+        padding-left: 5px;
+        margin-left: 3px;
+    }
+    
+    .reply-form-actions {
+        flex-direction: column;
+    }
+    
+    .reply-form-actions .btn {
+        width: 100%;
+    }
+    
+    .nested-reply::before {
+        font-size: 0.8rem;
+        left: -8px;
+    }
+    
+    .first-level-reply::before,
+    .second-level-reply::before {
+        display: none;
+    }
+}
+
+.accessibility-options {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+body.animations-disabled * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* Exception for loading indicators */
+body.animations-disabled .blink {
+    animation: blink-animation 1s step-end infinite !important;
+}
+
+/* Ensure marquee content displays fully when animations are disabled */
+body.animations-disabled .marquee-content {
+    animation: none !important;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+body.animations-disabled .marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+}
+
+body.animations-disabled .marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    animation: none !important;
+    transform: none !important;
+    width: auto;
+    overflow: visible;
+}
+
+body.animations-disabled .preview-comment {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* ===============================
+   PAGINATION
+   =============================== */
+   .pagination-container {
+    margin-top: 30px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    background-color: transparent;
+    border: none;
+    padding: 15px 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pagination-number {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    padding: 0;
+    margin: 0 2px;
+}
+
+.pagination-number.current {
+    background-color: #330033;
+    color: var(--link-hover);
+    border: 1px solid var(--link-hover);
+    cursor: default;
+    pointer-events: none;
+}
+
+.pagination-btn {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+}
+
+.pagination-ellipsis {
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+}
+
+.pagination-btn:hover,
+.pagination-number:hover {
+    transform: translateY(-2px);
+    background-color: #330033;
+}
+
+/* Responsive pagination */
+@media (max-width: 480px) {
+    .pagination {
+        gap: 4px;
+    }
+    
+    .pagination-number {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+    
+    .pagination-btn {
+        padding: 3px 8px;
+        font-size: 0.8rem;
+    }
+    
+    .pagination-ellipsis {
+        width: 20px;
+    }
+}
+.new-comment {
+    animation: fadeInComment 0.5s ease forwards;
+}
+
+.comments-loading-overlay {
+    position: relative;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: rgba(0, 10, 0, 0.7);
+    border: 1px dashed var(--border-color);
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.comments-loading-overlay.active {
+    opacity: 1;
+    height: auto;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+/* When animations are disabled */
+body.animations-disabled .new-comment {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+.music-posts.history-back .post {
+    animation: slideInRight 0.6s ease-out forwards;
+    opacity: 0; /* Start hidden */
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(10px); /* Reduced from 20px for subtler movement */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.music-posts.history-back .post:nth-child(1) { animation-delay: 0.05s; }
+.music-posts.history-back .post:nth-child(2) { animation-delay: 0.1s; }
+.music-posts.history-back .post:nth-child(3) { animation-delay: 0.15s; }
+.music-posts.history-back .post:nth-child(4) { animation-delay: 0.2s; }
+.music-posts.history-back .post:nth-child(5) { animation-delay: 0.25s; }
+
+.post-full {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    transition: opacity 0.5s ease;
+}
+
+/* Make navigation animations consistent when animations are disabled */
+body.animations-disabled .music-posts.history-back .post {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Thumbnail in full post view */
+.post-thumbnail-full {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.post-thumbnail-full img {
+    max-width: 100%;
+    max-height: 400px;
+    height: auto;
+    display: inline-block;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+/* Pinned post indicator */
+.pinned-indicator {
+    background-color: rgba(51, 255, 0, 0.1);
+    border: 1px solid var(--border-color);
+    padding: 5px 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--text-color);
+    text-shadow: 0 0 3px var(--text-color);
+}
+
+/* Pin checkbox styling */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+/* Admin pin button spacing */
+.toggle-pin-btn {
+    margin-right: 10px;
+}
